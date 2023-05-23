@@ -14,5 +14,7 @@ Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project
  
  **check installation status**: Does about what you would expect. Analyzes your game files to report whether or not the plugin loader is installed, if there is a disabled installation, and lists any plugins that are currently installed.
  
- **Q:** How to upgrade your C2 plugin loader to the latest version?
- **A:** run uninstall and then install. This will download the latest files.
+ **install plugins**: Allows the automatic installation of certain mods. Currently, only the c2server mod is available here. There is no automatic way to remove these mods, but it's as simple as deleting them from the Plugins folder (or the Plugins folder itself)
+ 
+**Q:** How to upgrade your C2 plugin loader to the latest version?
+**A:** run uninstall and then install. This will download the latest files.
