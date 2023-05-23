@@ -1,5 +1,5 @@
 # C2UMP-manager
-Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project
+Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This script is not expressly condoned by or associated with the creators of the C2UMP. I've taken care to prevent damaging of your game install, but give no garuntees that it won't happen, so use at your own risk! (If this does happen, contact me so I can fix the bug. A reinstall will fix everything)
 
 # Instructions:
   Drag and drop the .bat file into your chivalry 2 install folder (where the Chivalry2Launcher.exe is located) and then double click it. Follow the menu instructions from there.
