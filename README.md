@@ -2,7 +2,8 @@
 Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This script is not expressly condoned by or associated with the creators of the C2UMP. I've taken care to prevent damaging of your game install, but give no garuntees that it won't happen, so use at your own risk! (If this does happen, contact me so I can fix the bug. A reinstall will fix everything)
 
 # Instructions:
-  Drag and drop the .bat file into your chivalry 2 install folder (where the Chivalry2Launcher.exe is located) and then double click it. Follow the menu instructions from there. Menu options are selected using the keyboard by pressing the key corresponding to the option selected. For example, in the menu you select options by pressing one of the number keys.
+![image depicting exactly what folder to put the file in. This is described in text below.](whereToPutBat.png)
+  Drag and drop the correct .bat file into your chivalry 2 install folder (where the Chivalry2Launcher.exe is located) and then double click it. If you have the steam version of chivalry, use the `C2UMP-Steam-Manager.bat`. If your have the Epic version of chivalry, use the `C2UMP-Epic-Manager.bat`. **make sure you use the correct one.** Follow the menu instructions from there. Menu options are selected using the keyboard by pressing the key corresponding to the option selected. For example, in the menu you select options by pressing one of the number keys.
   
 # actions:
   
@@ -31,3 +32,6 @@ Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This s
 
 **P:** When I try to install, there is an error saying curl is not recognized!  
 **S:** This script uses curl which comes pre-installed in windows since Windows 10, version 1803. You'll need to [get curl](https://stackoverflow.com/questions/9507353/how-do-i-install-and-use-curl-on-windows).  
+
+**P:** When I try to run the game, it says "There is not usable authentication mechanism on this platform"  
+**S:** You probably used the wrong version. (you have steam but used epic / vice versa) Uninstall using the manager you installed with, then delete it and replace it with the correct one. Then, install with the correct one and it should work.
