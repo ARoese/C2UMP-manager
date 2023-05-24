@@ -6,15 +6,28 @@ Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This s
   
 # actions:
   
- **Install**: To install means to add the plugin loader to your game. This will allow you tu use mods for chivalry 2. When the plugin loader is installed, you cannot join official servers. This will look for a disabled installation, but if that isn't found, it will download the latest version from the official C2UMP github.
+ **Install**: To install means to add the plugin loader to your game. This will allow you to use mods for chivalry 2. When the plugin loader is installed, you cannot join official servers. This will look for a disabled installation to enable, but if that isn't found it will download the latest version from the official C2UMP github and install that.
  
- **Disable**: Disabling the plugin loader sets your game install back to vanilla, allowing you to join official servers again. Mod-related files are put to the side so that they won't affect your game, but can be easily found if you want to re-install.
+ **Disable**: Disabling the plugin loader sets your game install back to vanilla, allowing you to join official servers again. Mod-related files are put to the side so that they won't affect your game, but can be easily found by the install option if you want to re-install.
  
- **uninstall**: Same as disable, but actually deletes the plugin loader files.
+ **uninstall**: Same as disable, but actually deletes the plugin loader files. This will not delete the Plugins folder.
  
  **check installation status**: Does about what you would expect. Analyzes your game files to report whether or not the plugin loader is installed, if there is a disabled installation, and lists any plugins that are currently installed.
  
  **install plugins**: Allows the automatic installation of certain mods. Currently, only the c2server mod is available here. There is no automatic way to remove these mods, but it's as simple as deleting them from the Plugins folder (or the Plugins folder itself)
- 
-**Q:** How to upgrade your C2 plugin loader to the latest version?
-**A:** run uninstall and then install. This will download the latest files.
+
+# Q&A
+
+**Q:** How to upgrade C2 plugin loader to the latest version?  
+**A:** run uninstall and then install. This will download the latest files.  
+
+# Troubleshooting
+
+**P:** When I try to install the mod loader, I get an error saying it couldn't find a launcher!  
+**S:** This usually means that the .bat file is not in the correct location. (You are probably running it from your downloads folder!) Make sure you move it to the chivalry folder and then run it there.  
+
+**P:** When I try to install the mod loader, I get an error saying it couldn't download.  
+**S:** Check your internet connection before retrying.  
+
+**P:** When I try to install, there is an error saying curl is not recognized!  
+**S:** This script uses curl which comes pre-installed in windows since Windows 10, version 1803. You'll need to [get curl](https://stackoverflow.com/questions/9507353/how-do-i-install-and-use-curl-on-windows).  
