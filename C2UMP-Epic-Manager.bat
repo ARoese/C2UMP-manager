@@ -1,5 +1,7 @@
 @echo off
-
+set BINPATH=%cd%\TBL\Binaries\Win64
+set PLUGINSPATH=%cd%\Plugins
+::%cd%\TBL\Binaries\Win64\Plugins
 
 echo Welcome to the C2UMP manager for the epic launcher developed by BK-Foot_lettuce/DrLong! You can find
 echo me in the 300 discord or in the Unofficial Modding discord.
@@ -7,6 +9,8 @@ echo.
 echo This script is not expressly condoned by or associated with the creators of the C2UMP.
 echo I've taken care to prevent damaging of your game install, but give no garuntees that it won't happen,
 echo so use at your own risk! (If this does happen, contact me so I can fix the bug. A reinstall will fix everything)
+echo.
+echo IF YOU ARE ON STEAM, THIS IS NOT THE CORRECT MANAGER. DOWNLOAD THE STEAM VERSION!
 set STARTDIRECTORY=%cd%
 
 :menu
@@ -28,10 +32,10 @@ if %CHOICE% equ 4 goto evaluateStatus
 if %CHOICE% equ 5 exit
 
 :evaluateStatus
-if exist "%cd%\TBL\Binaries\Win64\XAPOFX1_5.dll" (
+if exist "%BINPATH%\XAPOFX1_5.dll" (
 	set PLSTATUS=installed
 ) else (
-	if exist "%cd%\TBL\Binaries\Win64\XAPOFX1_5-MODDED.dll" (
+	if exist "%BINPATH%\XAPOFX1_5-MODDED.dll" (
 		set PLSTATUS=disabled
 	) else (
 		set PLSTATUS=not installed
@@ -60,30 +64,30 @@ if not exist Chivalry2Launcher.exe (
 	)
 )
 echo The plugin launcher is %MLSTATUS%
-if exist Plugins (
+if exist "%PLUGINSPATH%" (
 	echo The plugins currently installed are:
-	dir Plugins /b
+	dir "%PLUGINSPATH%" /b
 )
 goto menu
 
 :uninstall
 if exist Chivalry2Launcher-UNINSTALLED.exe del Chivalry2Launcher-UNINSTALLED.exe
-if exist "%cd%\TBL\Binaries\Win64\XAPOFX1_5.dll" (
+if exist "%BINPATH%\XAPOFX1_5.dll" (
 	echo Deleting the plugin loader...
-	del "%cd%\TBL\Binaries\Win64\XAPOFX1_5.dll"
+	del "%BINPATH%\XAPOFX1_5.dll"
 	echo "Deleting the modded launcher... (If you want this back, it has been renamed to Chivalry2Launcher-UNINSTALLED.exe)"
 	rename Chivalry2Launcher.exe Chivalry2Launcher-UNINSTALLED.exe
 	rename Chivalry2Launcher-ORIGINAL.exe Chivalry2Launcher.exe
 ) else (
 	echo deleting the plugin loader...
-	if exist "%cd%\TBL\Binaries\Win64\XAPOFX1_5-MODDED.dll" del "%cd%\TBL\Binaries\Win64\XAPOFX1_5-MODDED.dll"
+	if exist "%BINPATH%\XAPOFX1_5-MODDED.dll" del "%BINPATH%\XAPOFX1_5-MODDED.dll"
 	echo "Deleting the modded launcher... (If you want this back, it has been renamed to Chivalry2Launcher-UNINSTALLED.exe)"
 	if exist Chivalry2Launcher-MODDED.exe rename Chivalry2Launcher-MODDED.exe Chivalry2Launcher-UNINSTALLED.exe
 )
 goto menu
 
 :installDisable
-if exist "%cd%\TBL\Binaries\Win64\XAPOFX1_5.dll" (
+if exist "%BINPATH%\XAPOFX1_5.dll" (
 	goto disable
 ) else (
     goto install
@@ -112,7 +116,7 @@ if not exist Chivalry2Launcher-MODDED.exe (
 rename Chivalry2Launcher-MODDED.exe Chivalry2Launcher.exe
 
 echo inserting plugin loader dll...
-cd TBL\Binaries\Win64
+cd "%BINPATH%"
 if not exist XAPOFX1_5-MODDED.dll (
 	echo Could not find the plugin loader. Downloading latest version from the official github now.
 	curl -Lo XAPOFX1_5-MODDED.dll "https://github.com/C2UMP/C2PluginLoader/releases/latest/download/XAPOFX1_5.dll"
@@ -123,7 +127,6 @@ if not exist XAPOFX1_5-MODDED.dll (
 )
 rename "XAPOFX1_5-MODDED.dll" "XAPOFX1_5.dll"
 echo the unofficial chivalry mod loader is now installed!
-cd ../../..
 goto menu
 
 :disable
@@ -145,7 +148,7 @@ echo replacing original launcher...
 rename Chivalry2Launcher-ORIGINAL.exe Chivalry2Launcher.exe
 
 echo renaming plugin loader dll...
-cd TBL\Binaries\Win64
+cd "%BINPATH%"
 if exist XAPOFX1_5-MODDED.dll (
 	echo XAPOFX1_5-MODDED.dll already exists. This might be the result of some confusion, but it's not an issue
 	echo This file will now be replaced with the plugin loader that is being used now.
@@ -153,7 +156,6 @@ if exist XAPOFX1_5-MODDED.dll (
 	del XAPOFX1_5-MODDED.dll
 )
 rename "XAPOFX1_5.dll" "XAPOFX1_5-MODDED.dll"
-cd ../../..
 echo the unofficial chivalry mod loader is now disabled!
 echo note: the plugins you had have not been removed, but their presence shouldn't affect your game.
 goto menu
@@ -161,8 +163,8 @@ goto menu
 :pluginInstall
 choice /c yn /m "Would you like to install the c2server plugin (required for hosting/joining private servers) now "
 if %ERRORLEVEL% equ 1 ( 
-	if not exist Plugins (
-		mkdir Plugins
+	if not exist "%PLUGINSPATH%" (
+		mkdir "%PLUGINSPATH%"
 		echo Created Plugins folder
 	)
 	goto installc2server 
@@ -171,7 +173,7 @@ if %ERRORLEVEL% equ 1 (
 )
 
 :installc2server
-cd Plugins
+cd "%PLUGINSPATH%"
 if not exist C2ServerPlugin.dll (
 	echo Downloading the latest C2ServerPlugin.dll version from github...
 	curl -Lo C2ServerPlugin.dll "https://github.com/C2UMP/C2ServerPlugin/releases/latest/download/C2ServerPlugin.dll"
@@ -179,5 +181,4 @@ if not exist C2ServerPlugin.dll (
 ) else (
 	echo The C2ServerPlugin already seems to be installed, so nothing will be done.
 )
-cd ..
 goto menu
