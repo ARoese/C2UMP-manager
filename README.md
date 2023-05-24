@@ -35,3 +35,8 @@ Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This s
 
 **P:** When I try to run the game, it says "There is not usable authentication mechanism on this platform"  
 **S:** You probably used the wrong version. (you have steam but used epic / vice versa) Uninstall using the manager you installed with, then delete it and replace it with the correct one. Then, install with the correct one and it should work.
+
+# Planned features
+
+1. Full mod auto-download and management support. (adding and removing mods/assets, disabling them, etc) Right now, it only allows adding the c2server mod and doesn't support automatically removing it.
+2. potentially using uPnP to forward a port for the chivalry server. This will be low-priority.
