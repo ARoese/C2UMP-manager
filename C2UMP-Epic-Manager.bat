@@ -1,7 +1,10 @@
 @echo off
 set BINPATH=%cd%\TBL\Binaries\Win64
 set PLUGINSPATH=%cd%\Plugins
-::%cd%\TBL\Binaries\Win64\Plugins
+set MODSPATH=%cd%\TBL\Content\Mods
+set STARTDIRECTORY=%cd%
+set "TAB=	"
+setlocal enabledelayedexpansion
 
 echo Welcome to the C2UMP manager for the epic launcher developed by BK-Foot_lettuce/DrLong! You can find
 echo me in the 300 discord or in the Unofficial Modding discord.
@@ -11,7 +14,6 @@ echo I've taken care to prevent damaging of your game install, but give no garun
 echo so use at your own risk! (If this does happen, contact me so I can fix the bug. A reinstall will fix everything)
 echo.
 echo IF YOU ARE ON STEAM, THIS IS NOT THE CORRECT MANAGER. DOWNLOAD THE STEAM VERSION!
-set STARTDIRECTORY=%cd%
 
 :menu
 cd "%STARTDIRECTORY%"
@@ -19,17 +21,19 @@ echo.
 echo Menu options:
 echo 1: install or disable the plugin loader. The correct action (install/disable) will be detected automatically.
 echo 2: uninstall the plugin loader. Doing this and then re-installing is the upgrade process
-echo 3: install plugin(s)
-echo 4: check installation status
-echo 5: exit
-choice /c 12345 /m "Select an option "
+echo 3: install plugins
+echo 4: install mods
+echo 5: check installation status
+echo 6: exit
+choice /n /c 123456 /m "Select an option: "
 set CHOICE=%ERRORLEVEL%
 cls
 if %CHOICE% equ 1 goto installDisable
 if %CHOICE% equ 2 goto uninstall
-if %CHOICE% equ 3 goto pluginInstall
-if %CHOICE% equ 4 goto evaluateStatus
-if %CHOICE% equ 5 exit
+if %CHOICE% equ 3 goto pluginMenu
+if %CHOICE% equ 4 goto modMenu
+if %CHOICE% equ 5 goto evaluateStatus
+if %CHOICE% equ 6 exit
 
 :evaluateStatus
 if exist "%BINPATH%\XAPOFX1_5.dll" (
@@ -64,10 +68,7 @@ if not exist Chivalry2Launcher.exe (
 	)
 )
 echo The plugin launcher is %MLSTATUS%
-if exist "%PLUGINSPATH%" (
-	echo The plugins currently installed are:
-	dir "%PLUGINSPATH%" /b
-)
+call :listPlugins
 goto menu
 
 :uninstall
@@ -160,17 +161,99 @@ echo the unofficial chivalry mod loader is now disabled!
 echo note: the plugins you had have not been removed, but their presence shouldn't affect your game.
 goto menu
 
-:pluginInstall
-choice /c yn /m "Would you like to install the c2server plugin (required for hosting/joining private servers) now "
-if %ERRORLEVEL% equ 1 ( 
-	if not exist "%PLUGINSPATH%" (
-		mkdir "%PLUGINSPATH%"
-		echo Created Plugins folder
-	)
-	goto installc2server 
-) else ( 
-	goto menu
+:pluginMenu
+cls
+call :listPlugins
+echo.
+echo Pick plugins to install:
+echo %TAB%[1] Server plugin (used to join or host private servers)
+echo %TAB%[2] Asset loader (used to load mods)
+echo.
+echo q: go back to the main menu
+echo o: open the plugins folder
+echo You can uninstall plugins by opening the plugins folder and deleting the .dll file with the plugin's name
+echo.
+choice /n /c qo12 /m "Press a number to install that plugin, or letter key: "
+set CHOICE=%ERRORLEVEL%
+cls
+if %CHOICE% equ 1 goto menu
+if %CHOICE% equ 2 (
+	start explorer.exe "%PLUGINSPATH%"
+	goto pluginMenu
 )
+if %CHOICE% equ 3 call :installc2server
+if %CHOICE% equ 4 call :installAssetLoader
+goto pluginMenu
+
+:modMenu
+if not exist %MODSPATH% mkdir %MODSPATH%
+cls
+call :listMods
+echo.
+echo NOTE: If the asset loader and server plugins are not installed, they will be installed automatically when you install a mod.
+echo Pick mods to install:
+::echo %TAB%Maps:
+::echo %TAB%%TAB%[1] ExampleMap
+::echo %TAB%%TAB%[2] FFA_TownSquare
+::echo %TAB%UI:
+::echo %TAB%%TAB%[3] ZainDebugMenu
+echo %TAB%[1] All of Zain's mods (individual selection not yet supported):
+echo %TAB%%TAB%ExampleMap
+echo %TAB%%TAB%FFA_TownSquare
+echo %TAB%%TAB%ZainDebugMenu
+
+echo.
+echo q: go back to the main menu
+echo o: open the mods folder
+echo.
+choice /n /c qo1 /m "Press a number to install that mod, or letter key: "
+set CHOICE=%ERRORLEVEL%
+cls
+if %CHOICE% gtr 2 (
+	call :installAssetLoader
+	call :installc2server
+)
+if %CHOICE% equ 1 goto menu
+if %CHOICE% equ 2 (
+	start explorer.exe "%MODSPATH%"
+	goto modMenu
+)
+if %CHOICE% equ 3 call :installZainMods
+goto modMenu
+
+::prevent fall-through to subroutines
+exit
+
+:listPlugins
+if exist %PLUGINSPATH% (
+	echo Installed plugins:
+	cd %PLUGINSPATH%
+	for %%F in (*.dll) do (
+		echo %TAB%%%~nF
+	)
+	goto :EOF
+) else (
+	echo There are no installed plugins.
+	goto :EOF
+)
+
+:listMods
+if exist "%MODSPATH%\Maps" (
+	echo Installed maps:
+	cd %MODSPATH%\Maps
+	for %%F in (*.umap) do (
+		echo %TAB%%%~nF
+	)
+)
+
+if exist "%MODSPATH%\UI" (
+	echo Installed UI mods:
+	cd %MODSPATH%\UI
+	for %%F in (*.uasset) do (
+		echo %TAB%%%~nF
+	)
+)
+goto :EOF
 
 :installc2server
 cd "%PLUGINSPATH%"
@@ -181,4 +264,35 @@ if not exist C2ServerPlugin.dll (
 ) else (
 	echo The C2ServerPlugin already seems to be installed, so nothing will be done.
 )
-goto menu
+goto :EOF
+
+:installAssetLoader
+cd "%PLUGINSPATH%"
+if not exist C2AssetLoaderPlugin.dll (
+	echo Downloading the latest C2AssetLoaderPlugin.dll version from github...
+	curl -Lo C2AssetLoaderPlugin.dll "https://github.com/C2UMP/C2AssetLoaderPlugin/releases/latest/download/C2AssetLoaderPlugin.dll"
+	if %ERRORLEVEL% neq 0 echo ERROR: Failed to download. This is curl's fault...
+) else (
+	echo The C2AssetLoaderPlugin already seems to be installed, so nothing will be done.
+)
+goto :EOF
+
+:installZainMods
+cd "%MODSSPATH%"
+if exist "%TMP%\ZainMods" rmdir /S /Q "%TMP%\ZainMods"
+mkdir "%TMP%\ZainMods"
+echo Downloading the mods from github...
+curl -Lo "%TMP%\ZainMods\ZainMods.zip" "https://github.com/C2UMP/C2Mods/archive/refs/heads/main.zip"
+if %ERRORLEVEL% neq 0 (
+	echo ERROR: Failed to download. This is curl's fault...
+	pause
+	goto :EOF
+)
+echo extracting...
+cd /d "%TMP%\ZainMods"
+tar -xf ZainMods.zip
+echo copying...
+robocopy C2Mods-main\Mods "%MODSPATH%" /E /IS /MOV
+echo Zain's mods are now installed!
+cd /d "%STARTDIRECTORY%"
+goto :EOF
