@@ -15,7 +15,9 @@ Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This s
  
  **check installation status**: Does about what you would expect. Analyzes your game files to report whether or not the plugin loader is installed, if there is a disabled installation, and lists any plugins that are currently installed.
  
- **install plugins**: Allows the automatic installation of certain mods. Currently, only the c2server mod is available here. There is no automatic way to remove these mods, but it's as simple as deleting them from the Plugins folder (or the Plugins folder itself)
+ **install plugins**: Allows the automatic installation of plugins made by Zain. Currently, this includes the c2 server mod and the asset loader. Allows opening of the plugins folder, wherever it may be, to install other plugins or uninstall plugins.
+ 
+ **install mods**: Allows the automatic installation of mods made by the UMP team. Currently, installs the example map, ffa_townsquare, and the debug menu together. If the plugins requires for mods are not installed, they will be installed automatically.
 
 # Q&A
 
