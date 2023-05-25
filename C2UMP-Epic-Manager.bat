@@ -163,6 +163,10 @@ goto menu
 
 :pluginMenu
 cls
+if not exist "%PLUGINSPATH%" (
+	echo made plugins folder
+	mkdir "%PLUGINSPATH%"
+)
 call :listPlugins
 echo.
 echo Pick plugins to install:
@@ -225,9 +229,9 @@ goto modMenu
 exit
 
 :listPlugins
-if exist %PLUGINSPATH% (
+if exist "%PLUGINSPATH%" (
 	echo Installed plugins:
-	cd %PLUGINSPATH%
+	cd "%PLUGINSPATH%"
 	for %%F in (*.dll) do (
 		echo %TAB%%%~nF
 	)
