@@ -40,5 +40,5 @@ Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This s
 
 # Planned features
 
-1. Full mod auto-download and management support. (adding and removing mods/assets, disabling them, etc) Right now, it only allows adding the c2server mod and doesn't support automatically removing it.
+1. Automatic install and download/management of individual official mods. Currently, they are bulk installed.
 2. potentially using uPnP to forward a port for the chivalry server. This will be low-priority. Currently, it's probably best to use [this](https://github.com/kaklakariada/portmapper) instead of netsh because netsh portproxy doesn't support UDP forwarding, which is what chiv2 needs.
