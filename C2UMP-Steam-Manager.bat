@@ -145,7 +145,7 @@ if %CHOICE% equ 4 call :installAssetLoader
 goto pluginMenu
 
 :modMenu
-if not exist %MODSPATH% mkdir %MODSPATH%
+if not exist "%MODSPATH%" mkdir "%MODSPATH%"
 cls
 call :listMods
 echo.
@@ -199,7 +199,7 @@ if exist "%PLUGINSPATH%" (
 :listMods
 if exist "%MODSPATH%\Maps" (
 	echo Installed maps:
-	cd %MODSPATH%\Maps
+	cd "%MODSPATH%\Maps"
 	for %%F in (*.umap) do (
 		echo %TAB%%%~nF
 	)
@@ -207,7 +207,7 @@ if exist "%MODSPATH%\Maps" (
 
 if exist "%MODSPATH%\UI" (
 	echo Installed UI mods:
-	cd %MODSPATH%\UI
+	cd "%MODSPATH%\UI"
 	for %%F in (*.uasset) do (
 		echo %TAB%%%~nF
 	)
