@@ -6,8 +6,6 @@ set STARTDIRECTORY=%cd%
 set "TAB=	"
 setlocal enabledelayedexpansion
 
-echo %cd%
-
 echo Welcome to the C2UMP manager for the epic launcher developed by BK-Foot_lettuce/DrLong! You can find
 echo me in the 300 discord or in the Unofficial Modding discord.
 echo.
