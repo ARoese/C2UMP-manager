@@ -1,3 +1,6 @@
+# THIS IS OBSOLETE.
+Use [The Unchained Launcher](https://github.com/Chiv2-Community/UnchainedLauncher) instead.
+
 # C2UMP-manager
 Auto-installer/uninstaller for the Chivalry 2 Unofficial Modding Project. This script is not expressly condoned by or associated with the creators of the C2UMP. I've taken care to prevent damaging of your game install, but give no garuntees that it won't happen, so use at your own risk! (If this does happen, contact me so I can fix the bug. A reinstall will fix everything)
 
